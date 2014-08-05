@@ -1,0 +1,7 @@
+hora-actors/node_modules
+hora-agents/node_modules
+hora-engine/node_modules
+hora-helpers/node_modules
+hora-models/node_modules
+node_modules
+.env

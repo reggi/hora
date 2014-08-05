@@ -1,0 +1,9 @@
+{
+  "github_user": "reggi",
+  "name": "Amazing List",
+  "handle": "amazing_list",
+  "type": "repos",
+  "items": [
+    "strongloop/express"
+  ]
+}
