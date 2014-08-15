@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./hora-server/bin/www"
+    "start": "nodemon ./hora-server/bin/www",
+    "cli": "node ./hora-cli/index.js"
   },
   "license": "ISC",
   "dependencies": {

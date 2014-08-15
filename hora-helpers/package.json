@@ -3,5 +3,6 @@
   "version": "0.0.0",
   "main": "index.js",
   "author": "Thomas Reggi",
-  "license": "private"
+  "license": "private",
+  "dependencies": {}
 }

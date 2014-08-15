@@ -1,4 +1,7 @@
-var helpers = require("helpers");
+var _ = require("underscore");
+var helpers = {};
+_.extend(helpers, require("hora-helpers"));
+_.extend(helpers, require("./helpers"));
 var fs = require("fs");
 
 var globals = {};
@@ -46,8 +49,13 @@ globals.lists_write = function(global) {
     */
 
     // via agents
-    var agents = require("agents")(global.db, global.github);
-    return agents.lists.write(options, callback);
+
+    var agents = require("hora-agents")(global.db, global.github);
+    return agents.lists.write(options, function(err, data) {
+      console.log(err);
+      console.log(data);
+      return callback(err, data);
+    });
 
   }
 }

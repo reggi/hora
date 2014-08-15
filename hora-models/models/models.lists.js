@@ -1,21 +1,21 @@
-var _ = require("underscore");
-var models = {
-  "lists": {},
-};
-
 module.exports = function(db) {
-
   var helpers = require("hora-helpers");
+  var _ = require("underscore");
+  var models = {
+    "lists": {},
+  };
 
-  models.lists.read = function(options, callback) {
-    var query = {};
-    if (options.handle) query.handle = options.handle;
-    if (options.github_user) query.github_user = options.github_user;
-    if (!_.size(query)) return callback(new Error("no query to read list"));
-    return db.lists.find(query).toArray(callback);
+  models.lists.read = function(query, callback) {
+    query = helpers.manipulate_options(query, "github_user");
+    return db.lists.find(query).toArray(function(err, lists) {
+      if (err) return callback(err);
+      if (lists.length == 0) return callback(new Error("no lists found"));
+      return callback(null, lists);
+    });
   }
 
   models.lists.write = function(options, callback) {
+    console.log(x);
     if (!options.name) return callback(new Error("missing required name"));
     if (!options.github_user) return callback(new Error("missing required github_user"));
     if (!options.overwrite) options.overwrite = false;
@@ -24,11 +24,9 @@ module.exports = function(db) {
 
     options.items = helpers.parse_github_url(options.items);
 
-    var doc = {
-      "$set": {
-        "updated_at": new Date(),
-      }
-    }
+    var doc = {}
+    doc["$set"] = {};
+    doc["$set"]["updated_at"] = new Date();
 
     if (options.rename) {
       doc["$set"]["name"] = options.rename;
@@ -48,29 +46,35 @@ module.exports = function(db) {
       doc["$set"]["type"] = options.type;
     }
 
-    if (options.items) {
-      if (options.remove) {
-        doc["$pullAll"] = {};
-        doc["$pullAll"]["items"] = options.items;
-      } else if (options.overwrite) {
-        doc["$set"]["items"] = {};
-        doc["$set"]["items"] = options.items;
+    if (!options.rename) {
+      if (options.items) {
+        if (options.remove) {
+          doc["$pullAll"] = {};
+          doc["$pullAll"]["items"] = options.items;
+        } else if (options.overwrite) {
+          doc["$set"]["items"] = {};
+          doc["$set"]["items"] = options.items;
+        } else {
+          doc["$addToSet"] = {};
+          doc["$addToSet"]["items"] = {};
+          doc["$addToSet"]["items"]["$each"] = options.items;
+        }
       } else {
-        doc["$addToSet"] = {};
-        doc["$addToSet"]["items"] = {};
-        doc["$addToSet"]["items"]["$each"] = options.items;
+        doc["$set"]["items"] = [];
       }
-    } else {
-      doc["$set"]["items"] = [];
     }
 
-    return db.lists.update({
+    var query = {
       "handle": helpers.handle(options.name),
       "github_user": options.github_user
-    }, doc, {
+    };
+
+    var options = {
       "upsert": true,
       "multi": false,
-    }, callback);
+    };
+
+    return db.lists.update(query, doc, options, callback);
   }
 
   return models.lists;

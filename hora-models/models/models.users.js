@@ -1,57 +1,37 @@
-var _ = require("underscore");
-var helpers = require("hora-helpers");
-var models = {};
-models.users = {};
-
-
-
 module.exports = function(db) {
 
-  models.users.create = function(options, callback) {
+  var helpers = require("hora-helpers");
+  var _ = require("underscore");
 
-    var doc = {
+  var models = {};
+  models.users = {};
+
+  models.users.write = function(options, callback) {
+    var setOnInsert = {
       "created_at": new Date(),
+    }
+    var set = {
+      "updated_at": new Date(),
       "github_user": options.github_user,
       "github_access_token": (options.github_access_token) ? options.github_access_token : false,
+      "github_data": options.github_data,
       "status": "active",
     }
-
     return db.users.update({
       "github_user": options.github_user,
     }, {
-      "$setOnInsert": doc,
+      "$setOnInsert": setOnInsert,
+      "$set": set
     }, {
       "upsert": true,
       "multi": false,
     }, callback);
-
   }
 
   models.users.read = function(options, callback) {
     options = helpers.manipulate_options(options, "github_user");
-
     return db.users.findOne({
       "github_user": options.github_user
-    }, callback);
-
-  }
-
-  models.users.update = function(options, callback) {
-
-    var doc = {
-      "updated_at": new Date(),
-    }
-
-    if (options.github_access_token) doc.github_access_token = options.github_access_token;
-    if (options.status) doc.status = options.status;
-
-    return db.users.update({
-      "github_user": options.github_user,
-    }, {
-      "$set": doc,
-    }, {
-      "upsert": false,
-      "multi": false,
     }, callback);
 
   }

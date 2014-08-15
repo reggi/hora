@@ -1,9 +1,12 @@
 var _ = require("underscore");
 var helpers = {};
 
+helpers.list_write_required = [
+  "github_user",
+  "name"
+];
+
 helpers.list_write_defaults = {
-  "github_user": "missingno",
-  "name": "missingno",
   "rename": false,
   "overwrite": false,
   "remove": false,

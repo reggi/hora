@@ -1,0 +1,22 @@
+{
+  "name": "hora",
+  "version": "0.0.0",
+  "authors": [
+    "reggi <thomas@reggi.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-social": "~4.6.0",
+    "polymer": "~0.3.3",
+    "font-awesome": "~4.1.0",
+    "polymer-github-ribbon": "reggi/polymer-github-ribbon",
+    "ember": "~1.6.1"
+  }
+}

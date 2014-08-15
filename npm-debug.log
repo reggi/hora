@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'run-script',
+1 verbose cli   'cli',
+1 verbose cli   '--user',
+1 verbose cli   'reggi',
+1 verbose cli   '--name',
+1 verbose cli   'Beta',
+1 verbose cli   '--item',
+1 verbose cli   'reggi/handwritten' ]
+2 info using npm@1.4.14
+3 info using node@v0.11.12
+4 error Error: ENOENT, open '/Users/thomas/Desktop/hora/node_modules/cli/package.json'
+5 error If you need help, you may report this *entire* log,
+5 error including the npm and node versions, at:
+5 error     <http://github.com/npm/npm/issues>
+6 error System Darwin 13.3.0
+7 error command "node" "/usr/local/bin/npm" "run-script" "cli" "--user" "reggi" "--name" "Beta" "--item" "reggi/handwritten"
+8 error cwd /Users/thomas/Desktop/hora
+9 error node -v v0.11.12
+10 error npm -v 1.4.14
+11 error path /Users/thomas/Desktop/hora/node_modules/cli/package.json
+12 error code ENOENT
+13 error errno -2
+14 verbose exit [ -2, true ]
