@@ -1,11 +1,11 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-  this.route("user", {
-    "path": "/:user"
-  });
   this.route("list", {
     "path": "/:user/:list"
+  });
+  this.route("lists", {
+    "path": "/:user/"
   });
 });
 
@@ -19,15 +19,18 @@ App.ApplicationRoute = Ember.Route.extend({
   }
 });
 
-App.UserRoute = Ember.Route.extend({
+App.ListsRoute = Ember.Route.extend({
   model: function(params) {
-    return params;
+    var url = ["/api/", params.user, "/", params.list, "lists.json"].join("");
+    return Ember.$.getJSON(url).then(function(data) {
+      return data;
+    });
   }
 });
 
 App.ListRoute = Ember.Route.extend({
   model: function(params) {
-    var url = ["/api/", params.user, "/", params.list, ".json"].join("");
+    var url = ["/api/", params.user, "/list/", params.list, ".json"].join("");
     return Ember.$.getJSON(url).then(function(data) {
       return data;
     });

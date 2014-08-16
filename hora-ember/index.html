@@ -56,9 +56,11 @@
               <ul class="nav navbar-nav navbar-right">
                 {{#if model.loggedin}}
                   <li>
-                    <a href="/{{ model.user.github_user }}">
-                      <span class="github_user">{{ model.user.github_user }}</span>
-                      <img class="github_avatar" {{bind-attr src=model.user.github_data.avatar_url}} style="width:20px">
+                    <li>
+                      {{#link-to 'lists' model.user.github_user}}
+                        <span class="github_user">{{ model.user.github_user }}</span>
+                        <img class="github_avatar" {{bind-attr src=model.user.github_data.avatar_url}} style="width:20px">
+                      {{/link-to}}
                     </a>
                   </li>
                   <li><a href="#" title="create new list"><i class="fa fa-plus"></i></a></li>
@@ -124,6 +126,20 @@
           {{/each}}
           </tbody>
         </table>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="lists">
+    <div class="container">
+      <div class="row" style="padding-bottom:30px">
+        <div class="col-xs-12">
+          <ul>
+            {{#each model.lists}}
+            <li>{{#link-to 'list' github_user handle }}{{ name }}{{/link-to}}</li>
+            {{/each}}
+          </ul>
         </div>
       </div>
     </div>

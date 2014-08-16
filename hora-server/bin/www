@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 var dotenv = require('dotenv').load();
-var engine = require("hora-engine");
-var helpers = engine.helpers;
+var helpers = require("hora-helpers");
 
 helpers.mongodb({
   uri: process.env.MONGO_URI,

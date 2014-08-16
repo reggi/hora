@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./hora-server/bin/www",
-    "cli": "node ./hora-cli/index.js"
+    "start": "nodemon ./hora-server/bin/www"
   },
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^0.4.0"
+    "dotenv": "^0.4.0",
+    "mongodb": "^1.4.8"
   }
 }

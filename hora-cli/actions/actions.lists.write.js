@@ -38,8 +38,10 @@ var list_write_options = function(global) {
   return options;
 }
 
-module.exports = function(global, callback) {
-  var options = list_write_options(global);
-  var agents = require("hora-agents")(global.db, global.github);
-  return agents.lists.write(options, callback);
-};
+module.exports = function(global) {
+  return function(callback) {
+    var options = list_write_options(global);
+    var models = require("hora-models")(global.db, global.github);
+    return models.list.write(options, callback);
+  };
+}

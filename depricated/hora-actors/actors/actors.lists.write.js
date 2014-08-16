@@ -1,16 +1,9 @@
 module.exports = function(model, github) {
+
   var _ = require('underscore');
   var async = require("async");
   var helpers = require("hora-helpers");
 
-  return function(model, github) {
-    return function(options, callback) {
-      console.log(options);
-      return callback(null, true);
-    }
-  }
-
-  /*
   var get_repo = function(github, full_name) {
     return function(callback) {
       full_name = helpers.parse_github_url(full_name);
@@ -64,5 +57,5 @@ module.exports = function(model, github) {
   }
 
   return get_save_repos_save_list(model, github);
-*/
+
 }

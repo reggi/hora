@@ -1,21 +1,9 @@
 module.exports = function(db) {
+
   var helpers = require("hora-helpers");
   var _ = require("underscore");
-  var models = {
-    "lists": {},
-  };
 
-  models.lists.read = function(query, callback) {
-    query = helpers.manipulate_options(query, "github_user");
-    return db.lists.find(query).toArray(function(err, lists) {
-      if (err) return callback(err);
-      if (lists.length == 0) return callback(new Error("no lists found"));
-      return callback(null, lists);
-    });
-  }
-
-  models.lists.write = function(options, callback) {
-    console.log(x);
+  return function(options, callback) {
     if (!options.name) return callback(new Error("missing required name"));
     if (!options.github_user) return callback(new Error("missing required github_user"));
     if (!options.overwrite) options.overwrite = false;
@@ -75,8 +63,6 @@ module.exports = function(db) {
     };
 
     return db.lists.update(query, doc, options, callback);
+
   }
-
-  return models.lists;
-
-};
+}

@@ -1,20 +1,21 @@
 var serveIndex = require('serve-index');
-var engine = require("hora-engine");
-var github = engine.helpers.github();
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var app = express();
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var OAuth2 = require("oauth").OAuth2;
+var helpers = require("hora-helpers");
+var github = helpers.github();
+var app = express();
 var oauth = new OAuth2(process.env.GITHUB_CLIENT_ID, process.env.GITHUB_CLIENT_SECRET, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
 
 module.exports = function(db) {
-  var models = engine.models(db, github);
+  var models = require("hora-models")(db, github);
+
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
   app.use(favicon());
@@ -44,6 +45,7 @@ module.exports = function(db) {
   app.use("/ember", express.static(path.join(__dirname, "..", 'hora-ember')));
 
   var middleware = require("./middleware");
+  var flows = require("hora-flows")(oauth, models, github);
 
   app.get('/', middleware.index());
 
@@ -58,7 +60,7 @@ module.exports = function(db) {
 
   app.get("/api/github/authorize", middleware.authorize(oauth));
   app.get("/api/github/callback", [
-    middleware.login(oauth, models, github, "/api/github/authorize"),
+    middleware.login(flows, "/api/github/authorize"),
     middleware.redirect(function(req) {
       return "/ember/#/" + req.session.github_user
     })

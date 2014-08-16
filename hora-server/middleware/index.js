@@ -1,4 +1,3 @@
-var flows = require("hora-flows");
 var middleware = {};
 
 middleware.set_session = function() {
@@ -32,15 +31,10 @@ middleware.authorize = function(oauth) {
   }
 }
 
-middleware.login = function(oauth, models, github, login) {
+middleware.login = function(flows, login) {
   return function(req, res, next) {
     if (req.query.error) return next(new Error(req.query.Error));
-    flows.login({
-      "oauth": oauth,
-      "code": req.query.code,
-      "models": models,
-      "github": github
-    }, function(err, results) {
+    flows.login(req.query.code, function(err, results) {
       if (err) return res.redirect(login);
       req.session.access_token = results.access_token;
       req.session.github_user = results.user.login;
@@ -94,7 +88,7 @@ middleware.api_access = function() {
 
 middleware.user_param = function(models) {
   return function(req, res, next, id) {
-    models.users.read(id, function(err, user) {
+    models.user.read(id, function(err, user) {
       if (err) return next(err);
       req.user = user;
       return next();
@@ -104,7 +98,7 @@ middleware.user_param = function(models) {
 
 middleware.user = function(models) {
   return function(req, res, next) {
-    models.users.read(req.session.github_user, function(err, user) {
+    models.user.read(req.session.github_user, function(err, user) {
       if (err) return next(err);
       req.user = user;
       return next();
@@ -114,7 +108,7 @@ middleware.user = function(models) {
 
 middleware.list_param = function(models) {
   return function(req, res, next, id) {
-    models.lists_repo.read({
+    models.list_repo.read({
       "github_user": req.params.user,
       "handle": id,
     }, function(err, list) {
@@ -130,7 +124,7 @@ middleware.req_json = function(item, error) {
   if (error) {
     return function(err, req, res, next) {
       if (typeof item == "function") return res.json(item(req));
-      return res.status(404).json(item);
+      return res.json(item);
     }
   } else {
     return function(req, res, next) {

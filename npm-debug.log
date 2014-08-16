@@ -3,6 +3,8 @@
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'run-script',
 1 verbose cli   'cli',
+1 verbose cli   'lists',
+1 verbose cli   'write',
 1 verbose cli   '--user',
 1 verbose cli   'reggi',
 1 verbose cli   '--name',
@@ -16,7 +18,7 @@
 5 error including the npm and node versions, at:
 5 error     <http://github.com/npm/npm/issues>
 6 error System Darwin 13.3.0
-7 error command "node" "/usr/local/bin/npm" "run-script" "cli" "--user" "reggi" "--name" "Beta" "--item" "reggi/handwritten"
+7 error command "node" "/usr/local/bin/npm" "run-script" "cli" "lists" "write" "--user" "reggi" "--name" "Beta" "--item" "reggi/handwritten"
 8 error cwd /Users/thomas/Desktop/hora
 9 error node -v v0.11.12
 10 error npm -v 1.4.14

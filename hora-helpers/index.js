@@ -1,10 +1,12 @@
 var _ = require("underscore");
 
-module.exports = function() {
-  var models = require("hora-models")().helpers;
-  var actors = require("hora-actors")().helpers;
-  var helpers = {};
-  _.extend(helpers, models);
-  _.extend(helpers, actors);
-  return helpers;
-}();
+var build_module_object = function(object, modules) {
+  var output = {};
+  _.each(modules, function(module) {
+    _.extend(output, require(module)()["helpers"]);
+  })
+  return output["helpers"];
+}
+
+var modules = ["hora-models"];
+module.exports = build_module_object("helpers", modules);

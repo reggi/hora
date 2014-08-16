@@ -3,7 +3,7 @@
 var dotenv = require('dotenv').load();
 var argv = require('minimist')(process.argv.slice(2));
 var async = require("async");
-var actions = require("./actions");
+
 var helpers = require("./helpers");
 var github = helpers.github();
 var global = {
@@ -16,8 +16,7 @@ var global = {
 async.waterfall([
   helpers.database(global),
   helpers.file(global),
-  //helpers.controller(global)
-  actions.lists.write(global)
+  require("./actions/actions.lists.write")(global)
 ], function(err, data) {
   if (err) throw err;
   console.log(data);
