@@ -3,13 +3,13 @@
 var dotenv = require('dotenv').load();
 var helpers = require("hora-helpers");
 
-console.log(process.env.MONGO_URI);
-
 helpers.mongodb({
   uri: process.env.MONGO_URI,
   collections: process.env.MONGO_COLLECTIONS
 }, function(err, db) {
   if (err) throw err;
+
+  var debug = require('debug')('hora-server');
   var app = require('../app')(db);
 
   app.set('port', process.env.PORT || 3000);
