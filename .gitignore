@@ -8,4 +8,7 @@ hora-flows/node_modules
 hora-server/node_modules
 bower_components
 node_modules
+!node_modules/hora-models
+!node_modules/hora-flows
+!node_modules/hora-helpers
 .env
