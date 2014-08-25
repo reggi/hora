@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <script src="./bower_components/platform/platform.js"></script>
+  <link rel="import" href="./bower_components/polymer-bootstrap-social/bootstrap-social.html">
+  <link rel="import" href="./bower_components/polymer-github-ribbon/github-ribbon.html">
+  <link rel="import" href="./bower_components/polymer/layout.html">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link href='http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css" shim-shadowdom>
+  <style>
+    body{
+      margin:0;
+    }
+    html, body, #main{
+      height:100%;
+      min-height:500px;
+    }
+    body {
+      background-color: #EEE;
+      font-family: 'PT Serif', serif;
+    }
+    h1, p{
+      padding-bottom:30px;
+    }
+    .fa-logo{
+      font-size:45px;
+    }
+    #attribution{
+      position:absolute;
+      bottom:20px;
+      right:20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="main" layout horizontal center center-justified>
+  <div class="jumbotron">
+    <div class="container">
+      <h1 style="text-align:center">
+        Hora is
+        <i class="fa fa-github-alt fa-logo" title="github"></i>
+        <i class="fa fa-plus fa-logo" title="plus"></i>
+        <i class="fa fa-list-alt fa-logo" title="list"></i>
+      </h1>
+      <p>Hora helps you keep track of the open source projects you love! Make lists of different github repositories and share them with the community! Sign in with github to get started creating your lists today!</p>
+      <p style="text-align:center">
+        <bootstrap-social service="github" size="lg" style="display: inline-block;">
+          <a href="/login">Sign in with Github</a>
+        </bootstrap-social>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="attribution">
+  <a href="https://github.com/reggi/hora">open source</a>
+  by <a href="https://twitter.com/thomasreggi">@thomasreggi</a>
+</div>
+
+</body>
+</html>

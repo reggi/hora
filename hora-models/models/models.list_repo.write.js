@@ -47,17 +47,33 @@ module.exports = function(db, github) {
 
   var save_list = function(options) {
     return function(callback) {
-      //options.items = _.difference(options.items, global.notfound);
-      //console.log(options.items);
       return models.list.write(options, callback);
     }
   }
 
   var get_save_repos_save_list = function(options, callback) {
-    return async.waterfall([
-      get_save_repos(options),
-      save_list(options),
-    ], callback);
+
+    var items = function(options) {
+      options.item = (options.item && typeof options.item == "string") ? options.item.replace(/\s+/g, "").split(",") : options.item;
+      options.items = (options.items && typeof options.items == "string") ? options.items.replace(/\s+/g, "").split(",") : options.items;
+      var items = [];
+      if (options.item) items = items.concat(options.item);
+      if (options.items) items = items.concat(options.items);
+      return items;
+    }
+    options.items = items(options);
+    delete options.item;
+    if (options.strict) {
+      return async.waterfall([
+        get_save_repos(options),
+        save_list(options),
+      ], callback);
+    } else {
+      return async.parallel([
+        get_save_repos(options),
+        save_list(options),
+      ], callback);
+    }
   }
 
   return get_save_repos_save_list;

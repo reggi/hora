@@ -19,6 +19,5 @@ module.exports = function(db, github) {
       "read": require("./models.user.read")(db)
     }
   };
-  models.list.write = models.list_repo.write;
   return models;
 };

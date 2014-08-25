@@ -1,0 +1,385 @@
+body{
+  background: hsl(0, 0%, 18%);
+}
+
+.gray-tier1{
+  background: hsl(0, 0%, 20%);
+  color:#fff;
+}
+
+.gray-tier2{
+  background: hsl(0, 0%, 18%);
+  color:#fff;
+}
+
+.gray-tier3{
+  background: hsl(0, 0%, 20%);
+  color:#fff;
+}
+
+.gray-tier4{
+  background: hsl(0, 0%, 22%);
+  color:#fff;
+}
+
+.project-name{
+  color:hsl(0, 0%, 95%);
+  display:inline-block;
+  font-family: 'Abel', sans-serif;
+  font-size:25px;
+  padding-top:5px;
+  /*
+  background: hsl(0, 0%, 18%);
+  text-transform: uppercase;
+  font-size:30px;
+  width:100%;
+  display:block;
+  padding:15px;
+  letter-spacing: 20px
+  */
+}
+
+.list-name{
+  padding: 25px 10px;
+  color:#fff;
+}
+
+bootstrap-social{
+  padding:10px 0 0 0;
+}
+
+html, body, .max-height, .ember-view{
+  height:100% !important;
+}
+
+.min-height{
+  min-height:100% !important;
+}
+
+#header{
+  position: fixed;
+  top:0;
+  width:100%;
+  height:50px;
+  z-index: 10;
+}
+
+#content{
+  position: relative;
+  z-index: 4;
+  padding-top:50px;
+}
+
+#table{
+  margin-top:-50px;
+  padding-top:50px;
+}
+
+#list-table th{
+  font-weight:normal;
+}
+
+#list-table th,
+#list-table td{
+  border:none;
+  position: relative;
+  padding: 0;
+  vertical-align: top;
+  padding-top:15px;
+  padding-left:15px;
+}
+
+.nopadding{
+  padding:0 !important;
+}
+
+.component-input .form-group{
+  margin:0;
+}
+
+.component-input input.form-control{
+  margin:0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background: hsl(0, 0%, 24%);
+  height:50px !important;
+  color:#fff;
+  padding-left: 15px;
+}
+
+.component-input input.form-control:focus{
+  background: hsl(0, 0%, 26%);
+  box-shadow: none;
+  border:none;
+}
+
+.white-button,
+.component-item-delete button,
+.component-item-create button,
+.component-list-create button,
+.component-list-delete button,
+.component-list-rename button{
+  padding:0;
+  margin:0;
+  width:50px;
+  height:50px !important;
+  border-radius: 0;
+  background: hsl(0, 100%, 100%);
+  color: hsl(0, 0%, 0%);
+  position: relative;
+}
+
+.btn.white-button.active{
+  webkit-box-shadow: none;
+  box-shadow: none
+}
+
+.list-edit-back,
+.component-list-delete{
+  width:50px;
+  position:absolute;
+  right:0;
+  top:0;
+  z-index:5;
+}
+
+.list-edit-back i{
+  margin-top: 15px;
+}
+
+.white-button:hover,
+.component-item-delete button:hover,
+.component-item-create button:hover,
+.component-list-create button:hover,
+.component-list-delete button:hover,
+.component-list-rename button:hover{
+  background:#000;
+  color:#fff;
+}
+
+.component-item-create,
+.component-list-create{
+  position:fixed;
+  bottom:0;
+  z-index: 6;
+  border-top: 1px solid hsl(0, 0%, 26%);
+}
+
+#add-form{
+  position:fixed;
+  bottom:0;
+  z-index:10;
+}
+
+#refresh-button{
+  right: 0;
+  position: absolute;
+  top: 0;
+}
+
+.loggedin ul{
+  list-style:none;
+  display:inline-block;
+  vertical-align: top;
+  margin:0;
+}
+.loggedin li{
+  display: inline-block;
+}
+.loggedin a{
+  padding-top:15px;
+  padding-right:30px;
+}
+.loggedin img{
+  display:inline-block;
+  width:50px;
+  height:50px;
+  background-color: #fff;
+}
+
+.github_avatar{
+  width:50px;
+}
+
+.notloggedin{
+  margin-right:20px;
+}
+
+.right-navigation a,
+.right-navigation a:hover{
+    color:#fff
+}
+.right-navigation:hover a {
+    opacity:0.2;
+}
+.right-navigation:hover a:hover {
+    opacity:1;
+}
+.right-navigation li,
+.right-navigation a{
+  height:50px;
+  display:inline-block;
+}
+
+.user-lists ul{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+
+.user-lists li{
+  border-bottom: 1px solid hsl(0, 0%, 26%);
+}
+
+.user-lists ul a{
+  display:inline-block;
+  padding-top: 15px;
+  padding-left: 15px;
+  height: 50px !important;
+  width: 100%;
+}
+
+.user-lists ul a,
+.user-lists ul a:hover{
+  color:#fff;
+}
+
+.user-lists ul:hover a{
+  opacity:0.2;
+  background: hsl(0, 0%, 30%);
+}
+.user-lists ul:hover a:hover {
+  opacity:1;
+  background: hsl(0, 0%, 22%);
+}
+
+.edit-button i,
+.user-lists .fa-chevron-right{
+  margin-right:30px;
+  color: #fff;
+}
+
+.user-list h2,
+.user-lists h2{
+  font-size:14px;
+  padding:0;
+  margin:0;
+  height:50px;
+  padding-top:15px;
+  padding-left:15px;
+  line-height: 20px;
+}
+
+.user-lists .edit-button{
+  display:inline-block;
+}
+
+.error-text{
+  padding: 140px 0 0 0;
+  text-align: center;
+}
+
+.error-icon{
+  text-align:center;
+  margin-top:20px;
+  color: hsl(0, 0%, 18%);
+}
+
+.user-list th.delete{
+  background-color:#4F53A3;
+  width:50px;
+}
+
+.user-list td.delete{
+  padding:0 !important;
+}
+
+.user-list tr{
+  height:50px;
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0);
+}
+
+.fixed{
+  position: fixed;
+  width: inherit;
+}
+
+.sidebar-top{
+  z-index:3;
+  position:relative;
+}
+
+.sidebar-bottom{
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 50px;
+  z-index:2;
+}
+
+.sidebar-bottom a:hover,
+.sidebar-bottom a:visited,
+.sidebar-bottom a:link,
+.sidebar-bottom a:active{
+  color:#888;
+}
+
+.list-edit{
+  margin-bottom: 50px;
+}
+
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+  margin-left: 0px;
+}
+
+.example-lists ul{
+  list-style:none;
+}
+
+ul.example-lists{
+  border-top:1px solid hsl(0, 0%, 22%);
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.example-lists li a{
+  display:block;
+  padding:0;
+  margin:0;
+  height:50px !important;
+  padding-top:15px;
+  padding-left: 15px;
+  background-color:hsl(0, 0%, 20%);
+  border-bottom:1px solid hsl(0, 0%, 22%);
+  color:#fff;
+}
+
+.example-lists li a:hover{
+  background-color:hsl(0, 0%, 24%);
+};
+
+#main{
+  height:100%;
+  min-height:500px;
+  font-family: 'PT Serif', serif;
+}
+
+#main .jumbotron{
+  background-color: transparent;
+}
+
+#main h1{
+  padding-bottom:30px;
+}
+#main .fa-logo{
+  font-size:45px;
+}
+#main #attribution{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+}

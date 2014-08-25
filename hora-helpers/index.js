@@ -1,12 +1,5 @@
-var _ = require("underscore");
+//var helpers = {};
+//helpers.module_object = require("./helpers/helpers.module_object");
+//module.exports = helpers.module_object("helpers", ["hora-models", "./helpers"], __dirname);
 
-var build_module_object = function(object, modules) {
-  var output = {};
-  _.each(modules, function(module) {
-    _.extend(output, require(module)()["helpers"]);
-  })
-  return output["helpers"];
-}
-
-var modules = ["hora-models"];
-module.exports = build_module_object("helpers", modules);
+module.exports = require("hora-models")().helpers;

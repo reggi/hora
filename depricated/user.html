@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./bower_components/platform/platform.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+  <link rel="import" href="./bower_components/polymer-bootstrap-social/bootstrap-social.html">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div class="container-fluid" id="header">
+  <div class="row">
+    <div class="col-xs-12 gray-tier1" style="height:50px">
+      <span class="project-name">
+        HORA
+      </span>
+      <bootstrap-social service="github" size="sm" style="display: inline-block;" class="pull-right">
+        <a href="/login">Sign in with Github</a>
+      </bootstrap-social>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid max-height" id="content">
+  <div class="row max-height">
+    <div class="col-sm-3 hidden-xs max-height nopadding">
+      <div class="container-fluid max-height nopadding">
+        <div class="col-xs-12 max-height gray-tier2 nopadding">
+
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-9 max-height gray-tier4">
+      <div style="text-align:center;margin-top:200px;color: hsl(0, 0%, 18%);">
+        <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("[data-show-on-focus]").on("focus", function(){
+    var id = $(this).attr('data-show-on-focus');
+    $(id).removeClass("hidden");
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+<!--
+
+
+<div class="container-fluid max-height" id="content">
+  <div class="row max-height">
+    <div class="col-sm-3 hidden-xs max-height nopadding">
+      <div class="container-fluid max-height gray-tier2" style="position:fixed;width:100%">
+        <div class="row max-height">
+          <div class="col-xs-12" style="padding:25px">
+            
+          </div>
+        </div>
+      </div>    
+    </div>
+    <div class="col-xs-12 col-sm-9 max-height gray-tier4">
+      <div class="col-xs-12 gray-tier4 max-height" style="padding:0">
+        <div style="text-align:center;margin-top:200px;color: hsl(0, 0%, 18%);">
+          <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+-->

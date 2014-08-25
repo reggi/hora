@@ -5,17 +5,25 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
 var OAuth2 = require("oauth").OAuth2;
 var helpers = require("hora-helpers");
-var github = helpers.github();
+
 var app = express();
-var oauth = new OAuth2(process.env.GITHUB_CLIENT_ID, process.env.GITHUB_CLIENT_SECRET, "https://github.com/", "login/oauth/authorize", "login/oauth/access_token");
+var github = helpers.github({
+  key: process.env.GITHUB_CLIENT_ID,
+  secret: process.env.GITHUB_CLIENT_SECRET
+});
+var oauth = new OAuth2(
+  process.env.GITHUB_CLIENT_ID,
+  process.env.GITHUB_CLIENT_SECRET,
+  "https://github.com/",
+  "login/oauth/authorize",
+  "login/oauth/access_token"
+);
 
 module.exports = function(db) {
   var models = require("hora-models")(db, github);
-
+  var middleware = require("./middleware")(models, oauth, github);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
   app.use(favicon());
@@ -23,100 +31,32 @@ module.exports = function(db) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
   app.use(cookieParser());
-  app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET,
-    store: new MongoStore({
-      db: db.native,
-    })
-  }));
-  app.use(function(req, res, next) {
-    if (req.host == "127.0.0.1") res.redirect("http://localhost:3000" + req.path);
-    return next();
-  });
+  app.use(middleware.sessionStore(db));
+  app.use(middleware.useLocalhost());
+
+  //static
   app.use("/bower_components", express.static(path.join(__dirname, "..", 'bower_components')));
   app.use("/bower_components", serveIndex(path.join(__dirname, "..", 'bower_components')));
-  app.use("/app/bower_components", express.static(path.join(__dirname, "..", 'bower_components')));
-  app.use("/app/bower_components", serveIndex(path.join(__dirname, "..", 'bower_components')));
-  app.use("/app", express.static(path.join(__dirname, "..", 'hora-client')));
-  app.use("/ember/bower_components", express.static(path.join(__dirname, "..", 'bower_components')));
-  app.use("/ember/bower_components", serveIndex(path.join(__dirname, "..", 'bower_components')));
-  app.use("/ember", express.static(path.join(__dirname, "..", 'hora-ember')));
+  app.use("/", express.static(path.join(__dirname, "..", 'hora-client')));
 
-  var middleware = require("./middleware");
-  var flows = require("hora-flows")(oauth, models, github);
+  //dymanic
+  app.param('user', middleware.param_user());
+  app.param('list_repos', middleware.param_list_repos());
+  app.param('list', middleware.param_list());
+  app.get("/github/authorize", middleware.github_login());
+  app.get("/github/callback", middleware.github_callback("/#/"));
+  app.get("/login", middleware.redirect("/github/authorize"));
+  app.get("/logout", middleware.logout());
+  app.get("/api/session.json", middleware.session());
+  app.delete("/api/lists/:user/:list.json", middleware.list_delete());
+  app.get("/api/lists/:user.json", middleware.lists_read());
+  app.put("/api/lists/:user/:list/rename.json", middleware.list_rename());
+  app.put("/api/lists/:user/:list/remove.json", middleware.list_remove());
+  app.put("/api/lists/:user/:list/add.json", middleware.list_add());
+  app.get("/api/lists/:user/:list_repos.json", middleware.list_read());
+  app.post("/api/lists/create.json", middleware.list_create());
 
-  app.get('/', middleware.index());
-
-  app.param('user', middleware.user_param(models));
-  app.param('list', middleware.list_param(models));
-
-  app.get("/login", middleware.redirect("/api/github/authorize"));
-  app.get("/logout", [
-    middleware.session_destroy(),
-    middleware.redirect("/app")
-  ]);
-
-  app.get("/api/github/authorize", middleware.authorize(oauth));
-  app.get("/api/github/callback", [
-    middleware.login(flows, "/api/github/authorize"),
-    middleware.redirect(function(req) {
-      return "/ember/#/" + req.session.github_user
-    })
-  ]);
-
-  app.get("/api/session.json", [
-    middleware.user(models),
-    middleware.api_access(),
-    middleware.req_json(function(req) {
-      var json = {};
-      json.user = req.user;
-      json.loggedin = true;
-      return json;
-    }),
-    middleware.req_json({
-      "loggedin": false
-    }, true),
-  ]);
-
-  app.get("/api/:user/lists.json", [
-    middleware.lists(models),
-    middleware.req_json(function(req) {
-      return {
-        "lists": req.lists
-      };
-    }),
-    middleware.req_json({
-      "lists": false
-    }, true),
-  ]);
-
-  app.get("/api/:user/list/:list.json", middleware.req_json(function(req) {
-    return req.list;
-  }));
-
-  // require session
-  // require session.github_user == :user
-
-  app.get("/api/make.json", function(req, res, next) {
-    console.log(models);
-  });
-
-  app.use(middleware.not_found());
-  app.use(middleware.error());
+  app.use(middleware.error_404);
+  app.use(middleware.error);
   return app;
 }
-
-/*
-app.get("/admin", function(req, res, next) {
-  models.users.read("reggi", function(err, user) {
-    if (err) return next(err);
-    req.session.github_user = "reggi",
-    req.session.access_token = user.github_access_token;
-    return res.send("logged in as reggi");
-  });
-});
-*/
-//app.get("/dashboard", middleware.return_session());
-//app.use("/api", middleware.api_access());

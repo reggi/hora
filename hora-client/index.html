@@ -1,63 +1,411 @@
 <!doctype html>
 <html>
 <head>
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
   <script src="./bower_components/platform/platform.js"></script>
-  <link rel="import" href="./bower_components/polymer-bootstrap-social/bootstrap-social.html">
-  <link rel="import" href="./bower_components/polymer-github-ribbon/github-ribbon.html">
-  <link rel="import" href="./bower_components/polymer/layout.html">
-  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css" shim-shadowdom>
-  <style>
-    body{
-      margin:0;
-    }
-    html, body, #main{
-      height:100%;
-      min-height:500px;
-    }
-    body {
-      background-color: #EEE;
-      font-family: 'PT Serif', serif;
-    }
-    h1, p{
-      padding-bottom:30px;
-    }
-    .fa-logo{
-      font-size:45px;
-    }
-    #attribution{
-      position:absolute;
-      bottom:20px;
-      right:20px;
-    }
-  </style>
+  <link rel="import" href="./bower_components/polymer-bootstrap-social/bootstrap-social.html">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-<div id="main" layout horizontal center center-justified>
-  <div class="jumbotron">
-    <div class="container">
-      <h1 style="text-align:center">
-        Hora is
-        <i class="fa fa-github-alt fa-logo" title="github"></i>
-        <i class="fa fa-plus fa-logo" title="plus"></i>
-        <i class="fa fa-list-alt fa-logo" title="list"></i>
-      </h1>
-      <p>Hora helps you keep track of the open source projects you love! Make lists of different github repositories and share them with the community! Sign in with github to get started creating your lists today!</p>
-      <p style="text-align:center">
-        <bootstrap-social service="github" size="lg" style="display: inline-block;">
-          <a href="/api/github/authorize">Sign in with Github</a>
-        </bootstrap-social>
-      </p>
+<script type="text/x-handlebars" id="header">
+<div class="container-fluid nopadding" id="header">
+  <div class="row">
+    <div class="col-xs-12 gray-tier1" style="height:50px">
+      <span class="project-name" style="margin-left:20px">
+        HORA
+      </span>
+      <div class="right-navigation pull-right">
+        {{#if loggedin }}
+          {{partial "header-logged–in"}}
+        {{else}}
+          {{partial "header-not-logged–in"}}
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>
+</script>
 
-<div id="attribution">
-  <a href="https://github.com/reggi/hora">open source</a>
-  by <a href="https://twitter.com/thomasreggi">@thomasreggi</a>
+<script type="text/x-handlebars" id="index">
+  <div class="user-lists">
+    <h2{{{pallet}}}>
+      Featured Lists
+    </h2>
+    <ul>
+    {{#each item in lists}}
+      <li>
+      {{#link-to "list" item.user item.handle}} 
+        {{item.name}} 
+        <i class="fa fa-chevron-right pull-right"></i> 
+      {{/link-to}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="header-not-logged–in">
+  <div class="notloggedin">
+    <bootstrap-social service="github" size="sm" style="display: inline-block;">
+      <a href="/login">Sign in with Github</a>
+    </bootstrap-social>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="header-logged–in">
+  <div class="loggedin">
+    <ul class="nav-links">
+      <li>{{#link-to 'user.edit' username}}create <i class="fa fa-plus"></i>{{/link-to}}</li>
+      <li>{{#link-to 'logout'}}logout <i class="fa fa-sign-out"></i>{{/link-to}}</li>
+      <li>{{#link-to 'user' username}}{{username}}{{/link-to}}</li>
+    </ul>
+    <img class="github_avatar" {{bind-attr src=avatar}}>
+  </div>
+</script>
+
+<script type="text/x-handlebars">
+{{partial "header"}}
+<div class="container-fluid max-height" id="content">
+  <div class="row max-height">
+    <div class="col-sm-3 hidden-xs max-height nopadding">
+      <div class="container-fluid max-height nopadding fixed">
+        <div class="col-xs-12 max-height gray-tier2 nopadding">
+          {{partial "sidebar"}}
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-9 min-height gray-tier4 nopadding">
+      {{outlet}}
+    </div>
+  </div>
 </div>
+</script>
 
+<script type="text/x-handlebars" id="sidebar">
+
+  <div class="sidebar-top gray-tier2">
+    <div style="padding:15px;line-height:28px">
+      <p>I &hearts; Open Source software, but it can be a little tricky to keeping track of all the similar projects out there.</p>
+      <p>Hora helps you keep track of the open source projects that are on Github! Make lists of different repositories and share them with the community!</p>
+      {{#unless loggedin}}
+      <p>{{#link-to login}}Sign in{{/link-to}} with Github to get started creating your lists today!</p>
+      {{/unless}}
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div>
+      <iframe src="http://ghbtns.com/github-btn.html?user=reggi&repo=hora&type=watch" allowtransparency="true" frameborder="0" scrolling="0" width="50" height="20"></iframe>
+      <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35&amp;appId=172915466166103" scrolling="no" frameborder="0" style="border:none; overflow:hidden; display:inline-block;height: 20px;width: 49px;" allowTransparency="true"></iframe>
+      <iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html" style="width:56px; height:20px;"></iframe>
+    </div>
+    <div style="color:#888;font-size:12px;line-height:12px">
+      <span>Created by <a href="https://twitter.com/thomasreggi">Thomas Reggi</a></span><br>
+      <span>Made with &hearts; in NYC</span>
+    </div>
+  </div>
+
+</script>
+
+<script type="text/x-handlebars" id="about">
+  <div style="padding:30px">
+    <p>Hora takes it's name from the watchmaker parable.</p>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="create">
+  <div style="padding:30px">
+    Make a new list
+  </div>
+  <div style="text-align:center;margin-top:200px;color: hsl(0, 0%, 18%);">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="list">
+  <div class="user-list">
+    {{outlet}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="list/index">  
+  <h2>
+    {{ list.name }}
+    {{#if loggedin}}
+    {{#link-to "list.edit" class="pull-right edit-button"}}
+      <i class="fa fa-pencil"></i> 
+    {{/link-to}}
+    {{/if}}
+  </h2>
+
+  <table class="table" id="list-table">
+    <thead>
+      <tr>
+        <th style="background-color:#4F53A3">Name</th>
+        <th style="background-color:#4FA1A3">Language</th>
+        <th style="background-color:#57A34F">Stargazers</th>
+        <th style="background-color:#A39B4F">Issues</th>
+        <th style="background-color:#9F4FA3">Size</th>
+        <th style="background-color:#A34F4F">Owner</th>
+        <th style="background-color:#4F53A3">Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each item in list.items}}
+        <tr >
+          <td>{{item.name}}</td>
+          <td>{{item.language}}</td>
+          <td>{{item.stargazers_count}}</td>
+          <td>{{item.open_issues}}</td>
+          <td>{{item.size}}</td>
+          <td>{{item.owner}}</td>
+          <td><a {{bind-attr href="item.html_url"}}>Source</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</script>
+
+<script type="text/x-handlebars" id="list/edit">
+  <div class="list-edit">
+  <div style="position:relative">
+    <div style="padding-right:50px;margin-right:1px;">
+      <div style="position:relative">
+        <div style="padding-right:50px;margin-right:1px;">
+          {{list-rename submit="listRename" transition="yes" handle=list.handle name=list.name username=username}}
+        </div>
+        {{list-delete submit="listDelete" handle=list.handle name=list.name username=username}}
+      </div>
+      <div class="list-edit-back">
+      {{#link-to "list" username list.handle class="btn white-button"}}
+        <i class="fa fa-arrow-left"></i> 
+      {{/link-to}}
+      </div>
+    </div>
+  </div>
+
+  <table class="table" id="list-table">
+    <thead>
+      <tr>
+        <th style="background-color:#4F53A3">Name</th>
+        <th style="background-color:#4FA1A3">Language</th>
+        <th style="background-color:#57A34F">Stargazers</th>
+        <th style="background-color:#A39B4F">Issues</th>
+        <th style="background-color:#9F4FA3">Size</th>
+        <th style="background-color:#A34F4F">Owner</th>
+        <th style="background-color:#4F53A3">Source</th>
+        <th class="delete"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each item in list.items}}
+        <tr >
+          <td>{{item.name}}</td>
+          <td>{{item.language}}</td>
+          <td>{{item.stargazers_count}}</td>
+          <td>{{item.open_issues}}</td>
+          <td>{{item.size}}</td>
+          <td>{{item.owner}}</td>
+          <td><a {{bind-attr href="item.html_url"}}>Source</a></td>
+          <td class="delete">{{item-delete submit="itemDelete" handle=list.handle item=item.full_name username=username}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  </div>
+
+  {{item-create submit="itemCreate" username=username handle=list.handle}}
+
+</script>
+
+<script type="text/x-handlebars" id="user">
+  <div class="user-lists">
+    {{outlet}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="user/index">
+  <h2{{{pallet}}}>
+    {{ username }}'s Lists
+    {{#if loggedin}}
+    {{#link-to "user.edit" class="pull-right edit-button"}}
+      <i class="fa fa-pencil"></i> 
+    {{/link-to}}
+    {{/if}}
+  </h2>
+  <ul>
+  {{#each item in lists}}
+    <li>
+    {{#link-to "list" username item.handle}} 
+      {{item.name}} 
+      <i class="fa fa-chevron-right pull-right"></i> 
+    {{/link-to}}
+    </li>
+  {{/each}}
+  </ul>
+</script>
+
+<script type="text/x-handlebars" id="user/edit">
+  <h2{{{pallet}}}>
+    Edit Your Lists
+    {{#link-to "user.index" class="pull-right edit-button"}}
+      <i class="fa fa-arrow-left"></i> 
+    {{/link-to}}
+  </h2>
+  <ul>
+  {{#each item in lists}}
+    <li style="position:relative">
+      <div style="padding-right:50px;margin-right:1px;">
+        {{list-rename submit="listRename" transition="no" handle=item.handle name=item.name username=username}}
+      </div>
+        {{list-delete submit="listDelete" handle=item.handle name=item.name username=username}}
+    </li>
+  {{/each}}
+  </ul>
+  {{list-create submit="listCreate" username=username}}
+</script>
+
+<script type="text/x-handlebars" id="user/error">
+  <div class="error-text">
+    You shouldn't be here.
+  </div>
+  <div class="error-icon">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+
+<script type="text/x-handlebars" id="list/error">
+  <div class="error-text">
+    You shouldn't be here.
+  </div>
+  <div class="error-icon">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="list/empty">
+  <h2{{pallet}}>
+    {{ list.name }}
+    {{#if loggedin}}
+    {{#link-to "list.edit" class="pull-right edit-button"}}
+      <i class="fa fa-pencil"></i> 
+    {{/link-to}}
+    {{/if}}
+  </h2>
+  <div class="error-text">
+    This list has no repositories :(
+  </div>
+  <div class="error-icon">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="user/empty">
+  <h2{{{pallet}}}>
+    {{ username }}'s Lists
+    {{#if loggedin}}
+    {{#link-to "user.edit" class="pull-right edit-button"}}
+      <i class="fa fa-pencil"></i> 
+    {{/link-to}}
+    {{/if}}
+  </h2>
+  <div class="error-text">
+    Aww {{username}} has no lists :(
+  </div>
+  <div class="error-icon">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="list/missing">
+  <div class="error-text">
+    No List found :(
+  </div>
+  <div class="error-icon">
+    <i class="fa fa-list-alt fa-logo" title="list" style="font-size:100px"></i>
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/list-rename">
+  <form role="form" class="component-input component-list-rename" {{action "submit" on="submit"}}>
+    <div class="form-group">
+      <div class="input-group">
+        {{input type="text" class="form-control" value=name}}
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-search">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/list-delete">
+  <form role="form" class="component-input component-list-delete" {{action "submit" on="submit"}}>
+    <button type="submit" class="btn">
+      <i class="fa fa-trash-o"></i>
+    </button>
+  </form>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/list-create">
+  <form role="form" class="component-input component-list-create" {{action "submit" on="submit"}}>
+    <div class="form-group">
+      <div class="input-group">
+        {{input type="text" class="form-control" placeholder="Put your new list name here" value=name}}
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-search">
+            <i class="fa fa-plus"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/item-create">
+  <form role="form" class="component-input component-item-create" {{action "submit" on="submit"}}>
+    <div class="form-group">
+      <div class="input-group">
+        {{input type="text" class="form-control" placeholder="Add a repository here" value=item}}
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-search">
+            <i class="fa fa-plus"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</script>
+
+<script type="text/x-handlebars" data-template-name="components/item-delete">
+  <form role="form" class="component-input component-item-delete" {{action "submit" on="submit"}}>
+    <button type="submit" class="btn">
+      <i class="fa fa-trash-o"></i>
+    </button>
+  </form>
+</script>
+
+<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./bower_components/handlebars/handlebars.min.js"></script>
+<script src="./bower_components/ember/ember.min.js"></script>
+<script src="/app.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("[data-show-on-focus]").on("focus", function(){
+    var id = $(this).attr('data-show-on-focus');
+    $(id).removeClass("hidden");
+  });
+});
+</script>
+  
 </body>
 </html>
