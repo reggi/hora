@@ -3,21 +3,23 @@
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./hora-server/bin/www"
+    "start": "node ./hora-server/bin/www",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^0.4.0",
-    "hora-flows": "0.0.0",
-    "hora-helpers": "0.0.0",
-    "hora-models": "0.0.0",
     "body-parser": "~1.0.0",
+    "bower": "^1.3.9",
     "connect-mongo": "^0.4.1",
     "cookie-parser": "~1.0.1",
     "debug": "^0.7.4",
+    "dotenv": "^0.4.0",
     "ejs": "~0.8.5",
     "express": "~4.2.0",
     "express-session": "^1.7.2",
+    "hora-flows": "0.0.0",
+    "hora-helpers": "0.0.0",
+    "hora-models": "0.0.0",
     "less-middleware": "1.0.x",
     "morgan": "~1.0.0",
     "oauth": "^0.9.12",

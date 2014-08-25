@@ -18,6 +18,7 @@
     "font-awesome": "~4.1.0",
     "polymer-github-ribbon": "reggi/polymer-github-ribbon",
     "ember": "~1.6.1",
-    "ember-data": "~0.0.14"
+    "ember-data": "~0.0.14",
+    "polymer-bootstrap-social": "reggi/polymer-bootstrap-social"
   }
 }
