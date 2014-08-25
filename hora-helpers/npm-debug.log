@@ -1,0 +1,63 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', './hora-helpers' ]
+2 info using npm@1.4.14
+3 info using node@v0.11.12
+4 warn package.json hora-helpers@0.0.0 No description
+5 warn package.json hora-helpers@0.0.0 No repository field.
+6 warn package.json hora-helpers@0.0.0 No README data
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ './hora-helpers', null ]
+9 verbose cache add name=undefined spec="./hora-helpers" args=["./hora-helpers",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: './hora-helpers',
+10 verbose parsed url   path: './hora-helpers',
+10 verbose parsed url   href: './hora-helpers' }
+11 silly lockFile fbce6406-hora-helpers ./hora-helpers
+12 verbose lock ./hora-helpers /Users/thomas/.npm/fbce6406-hora-helpers.lock
+13 info maybeGithub Attempting ./hora-helpers from git://github.com/./hora-helpers
+14 silly lockFile 520b30aa-git-github-com-hora-helpers git://github.com/./hora-helpers
+15 verbose lock git://github.com/./hora-helpers /Users/thomas/.npm/520b30aa-git-github-com-hora-helpers.lock
+16 verbose addRemoteGit [ 'git://github.com/./hora-helpers', 'master' ]
+17 verbose git clone git://github.com/./hora-helpers Cloning into bare repository '/Users/thomas/.npm/_git-remotes/git-github-com-hora-helpers-520b30aa'...
+17 verbose git clone git://github.com/./hora-helpers
+17 verbose git clone git://github.com/./hora-helpers fatal: remote error:
+17 verbose git clone git://github.com/./hora-helpers   Repository not found.
+18 silly lockFile 520b30aa-git-github-com-hora-helpers git://github.com/./hora-helpers
+19 silly lockFile 520b30aa-git-github-com-hora-helpers git://github.com/./hora-helpers
+20 info maybeGithub Attempting ./hora-helpers from git+ssh://git@github.com:./hora-helpers
+21 silly lockFile 3e662e4e-git-github-com-hora-helpers git@github.com:./hora-helpers
+22 verbose lock git@github.com:./hora-helpers /Users/thomas/.npm/3e662e4e-git-github-com-hora-helpers.lock
+23 verbose addRemoteGit [ 'git@github.com:./hora-helpers', 'master' ]
+24 error git clone git@github.com:./hora-helpers Cloning into bare repository '/Users/thomas/.npm/_git-remotes/git-github-com-hora-helpers-3e662e4e'...
+24 error git clone git@github.com:./hora-helpers
+24 error git clone git@github.com:./hora-helpers ERROR: Repository not found.
+24 error git clone git@github.com:./hora-helpers fatal: Could not read from remote repository.
+24 error git clone git@github.com:./hora-helpers
+24 error git clone git@github.com:./hora-helpers Please make sure you have the correct access rights
+24 error git clone git@github.com:./hora-helpers and the repository exists.
+25 silly lockFile 3e662e4e-git-github-com-hora-helpers git@github.com:./hora-helpers
+26 silly lockFile 3e662e4e-git-github-com-hora-helpers git@github.com:./hora-helpers
+27 silly lockFile fbce6406-hora-helpers ./hora-helpers
+28 silly lockFile fbce6406-hora-helpers ./hora-helpers
+29 error addLocal Could not install ./hora-helpers
+30 error Error: ENOENT, stat './hora-helpers'
+31 error If you need help, you may report this *entire* log,
+31 error including the npm and node versions, at:
+31 error     <http://github.com/npm/npm/issues>
+32 error System Darwin 13.3.0
+33 error command "node" "/usr/local/bin/npm" "install" "./hora-helpers"
+34 error cwd /Users/thomas/Desktop/hora/hora-helpers
+35 error node -v v0.11.12
+36 error npm -v 1.4.14
+37 error path ./hora-helpers
+38 error code ENOENT
+39 error errno -2
+40 verbose exit [ -2, true ]

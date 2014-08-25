@@ -5,6 +5,7 @@
   "author": "Thomas Reggi",
   "license": "private",
   "dependencies": {
+    "dotty": "0.0.2",
     "underscore": "^1.6.0"
   }
 }
