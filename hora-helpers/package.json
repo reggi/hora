@@ -4,5 +4,7 @@
   "main": "index.js",
   "author": "Thomas Reggi",
   "license": "private",
-  "dependencies": {}
+  "dependencies": {
+    "underscore": "^1.6.0"
+  }
 }
