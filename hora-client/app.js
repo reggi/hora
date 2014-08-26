@@ -295,6 +295,7 @@ App.ListEditController = Ember.ObjectController.extend({
         },
         dataType: "json"
       }).done(function(data) {
+        if (!data.add) alert("Couldn't fetch that repository.");
         $elm.find("button i").removeClass("fa-refresh").removeClass("fa-spin").addClass("fa-plus");
         $elm.find("input").val("");
         _this.updateView(params);
